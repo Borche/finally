@@ -1,0 +1,27 @@
+spring:
+  config:
+    # Secrets live in the repo-root .env; import it whether the app runs from the root or from backend/.
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+
+market:
+  default-tickers: AAPL,MSFT,GOOGL,AMZN,NVDA,META,TSLA,JPM,V,SPY
+  massive:
+    api-key: ${MASSIVE_API_KEY:}
+    base-url: https://api.massive.com
+    poll-interval: 15s
+    eod-refresh-interval: 1h
+    max-tickers-per-request: 200
+  simulator:
+    # Explicit placeholders: relaxed binding would map MARKET_SIMULATOR_TICK_INTERVAL to
+    # market.simulator.tick.interval, not market.simulator.tick-interval.
+    tick-interval: ${MARKET_SIMULATOR_TICK_INTERVAL:500ms}
+    time-scale: ${MARKET_SIMULATOR_TIME_SCALE:1.0}
+    seed: ${MARKET_SIMULATOR_SEED:}
+    market-beta: 0.5
+    sector-beta: 0.4
+    mean-time-between-jumps: 2h
+    jump-sigma: 0.02
+    market-jump-sigma: 0.015
+    history-days: 260
